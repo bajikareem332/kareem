@@ -10,7 +10,7 @@ def buildartifact()
 }
 
 
-def deploytoTomcat(jobname,ipaddress,context)
+def deployTomcat(jobname,ipaddress,context)
 {
  sh "scp /var/lib/jenkins/workspace/${jobname}/target/helloworld.war ubuntu@${ipaddress}:/var/lib/tomcat10/webapps/${context}.war"
 }
