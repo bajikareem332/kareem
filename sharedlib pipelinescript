@@ -1,0 +1,62 @@
+@Library('kareem')_
+
+pipeline
+{
+    agent any
+    stages
+    {
+        stage('cont download')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.gitdownload("mymaven")
+                }
+            }
+        }
+         stage('cont build')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.buildArtifact()
+                }
+            }
+        }
+         stage('cont deploy')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.deploy("sharedlibreries","172.31.17.145","testapp")
+                }
+            }
+        }
+         stage('cont testing')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.gitdownload("myfunctionaltesting")
+                    cicd.runselenium("sharedlibreries")
+                }
+            }
+        }
+         stage('cont delivery')
+        {
+            steps
+            {
+                script
+                {
+                    cicd.deploy("sharedlibreries","172.31.16.220","prodapp")
+                }
+            }
+        }
+        
+    }
+}
+
